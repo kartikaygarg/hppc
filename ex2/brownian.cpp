@@ -14,10 +14,11 @@ void main()
 	mt19937 mt(rd());
 	std::uniform_real_distribution<double> dist (0,1.0);
 	#pragma omp parallel for schedule(dynamic)
-	{
 		for(i=0;i<10000;++i){
-			
+			pos[i][0] = dist(mt);
+			pos[i][1] = dist(mt);
+			pos[i][2] = dist(mt);
 		}
-	}
+	
 
 }
