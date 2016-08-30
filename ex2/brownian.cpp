@@ -3,6 +3,7 @@
 #include <random>
 #include <time.h>
 #include <chrono>
+#include <omp.h>
 using namespace std;
 using ns = chrono::nanoseconds;
 using get_time = chrono::steady_clock;
@@ -10,7 +11,6 @@ using get_time = chrono::steady_clock;
 int main()
 {
 	random_device rd;
-	//int i;
 	double pos[10000][3];
 	double dist[10000][10];
 	double dist_tot[10];
@@ -38,6 +38,7 @@ int main()
 	#pragma omp parallel for schedule(runtime)
 		for(int i=0; i<10000; ++i)
 		{
+			std::cout<<"Hello from thread id: "<<omp_get_thread_num()<<"\n";
 			for(int j=0;j<5000;++j)
 			{
 				double temp_x = pos[i][0] + (sqrt(2*del_t) * dist_y(mt));
