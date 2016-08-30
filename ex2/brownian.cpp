@@ -50,7 +50,10 @@ int main()
 				pos[i][2] = temp_z;
 			}
 		}
+	auto wall_t3 = get_time::now();
 	std::cout<<"Simulation complete! Calculating average distances.\n";
+    auto diff_2 = wall_t3 - wall_t1;
+    std::cout<<"\nSimulation time: "<<chrono::duration_cast<std::chrono::nanoseconds>(diff_2).count()<<" ns.\n";
 	#pragma omp parallel for schedule(static)
 		for(int i=0; i<10; ++i)
 		{
@@ -62,8 +65,10 @@ int main()
 		}
 	auto wall_t2 = get_time::now();
 	
+    auto diff_3 = wall_t2 - wall_t3;
+    std::cout<<"\nAverage calculation time: "<<chrono::duration_cast<std::chrono::nanoseconds>(diff_3).count()<<" ns.\n";
     auto diff = wall_t2 - wall_t1;
-    std::cout<<"\nComputation time: "<<chrono::duration_cast<std::chrono::nanoseconds>(diff).count()<<" ns.\n";
+    std::cout<<"\nTotal Computation time: "<<chrono::duration_cast<std::chrono::nanoseconds>(diff).count()<<" ns.\n";
 	std::cout<<"Average Distances travelled by the particles for this scheduling policy are: ";
 	for(int i=0; i<10;++i)
 	{
