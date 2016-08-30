@@ -47,18 +47,21 @@ int main()
     cnt_per_thrd = index/thrd_cnt;
     auto wall_t1 = get_time::now();
     //clock_gettime(CLOCK_REALTIME,&wall_t1);
-    for(ptr=0, i=0; ptr < index; ptr += cnt_per_thrd, ++i){
-        //thrd_ref[i] = std::thread(worker, arr_x, arr_y, ptr, cnt_per_thrd);
-        thrd_ref[i] = std::thread(worker, inp_x, inp_y, ptr, cnt_per_thrd);
-    }
-    for(ptr=0; ptr < i; ++ptr){
-        thrd_ref[ptr].join();
-    }
+	for( int kk=0; kk<1000; ++kk)
+	{
+	    for(ptr=0, i=0; ptr < index; ptr += cnt_per_thrd, ++i){
+		    //thrd_ref[i] = std::thread(worker, arr_x, arr_y, ptr, cnt_per_thrd);
+			thrd_ref[i] = std::thread(worker, inp_x, inp_y, ptr, cnt_per_thrd);
+		}
+		for(ptr=0; ptr < i; ++ptr){
+			thrd_ref[ptr].join();
+		}
+	}
     auto wall_t2 = get_time::now();
 
     //clock_gettime(CLOCK_REALTIME,&wall_t2);
     auto diff = wall_t2 - wall_t1;
-    std::cout<<"\nComputation time for "<<index<<" number of elements is: "<<chrono::duration_cast<std::chrono::nanoseconds>(diff).count()<<" ns.\n";
+    std::cout<<"\nComputation time for "<<index<<" number of elements is: "<<chrono::duration_cast<std::chrono::nanoseconds>(diff).count()/1000<<" ns.\n";
     //std::cout<<"\nComputation time for "<<index<<" number of elements is: "<<chrono::duration_cast<std::chrono::microseconds>(diff).count()<<" us.\n";
     //std::cout<<"\nComputation time for "<<index<<" number of elements is: "<<chrono::duration_cast<std::chrono::milliseconds>(diff).count()<<" ms.\n";
 
