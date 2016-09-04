@@ -25,9 +25,12 @@ int main()
 			dist_tot[i] = 0;
 	#pragma omp parallel for schedule(static,1)
 		for(int i=0;i<10000;++i){
-			pos[i][0] = dist_x(mt);
-			pos[i][1] = dist_x(mt);
-			pos[i][2] = dist_x(mt);
+			init_pos[i][0] = dist_x(mt);
+			pos[i][0] = init_pos[i][0];
+			init_pos[i][1] = dist_x(mt);
+			pos[i][1] = init_pos[i][1];
+			init_pos[i][2] = dist_x(mt);
+			pos[i][2] = init_pos[i][2];
 			for(int j=0; j<10;++j)
 			{
 				dist[i][j] = 0;
@@ -47,7 +50,7 @@ int main()
 				pos[i][2] = pos[i][2] + (sqrt(2*del_t) * dist_y(mt));
 				if(((j+1)/500 > 0) && ((j+1)%500 == 0))
 				{
-					dist[i][((j+1)/500)] += sqrt( pow((pos[i][0] - init_pos[i][0]),2) + pow((pos[i][1] - init_pos[i][1]),2) + pow((pos[i][2] - init_pos[i][2]),2) );
+					dist[i][(j/500)] += sqrt( pow((pos[i][0] - init_pos[i][0]),2) + pow((pos[i][1] - init_pos[i][1]),2) + pow((pos[i][2] - init_pos[i][2]),2) );
 					//dist[i][(j/500)-1] += sqrt( pow((pos[i][0] - init_pos[i][0]),2) + pow((pos[i][1] - init_pos[i][1]),2) + pow((pos[i][2] - init_pos[i][2]),2) );
 				}
 				//dist[j/500] += sqrt( pow((temp_x - pos[i][0]),2) + pow((temp_y - pos[i][1]),2) + pow((temp_z - pos[i][2]),2) );
